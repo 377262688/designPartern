@@ -126,6 +126,8 @@
 通过组合来替代继承，主要作用是给原始类添加增强功能，可以对原始类嵌套使用多个装饰器，设计时，装饰器类需要和原始类继承相同的抽象类或接口。
 
 ## 适配器模式
+ 适配器一般来说是一种时候补救的策略，将不兼容的接口转换为课兼容的接口，
+ 让原本不兼容的接口可以一起工作。两种实现方式，分别是类适配器和对象适配器
 
 SLF4J 在LoggerFactory 类中的 bind() 方法中调用 findPossibleStaticLoggerBinderPathSet()中，会使用 ClassLoader
 去查找 org/slf4j/impl/StaticLoggerBinder.class 资源。 
@@ -135,4 +137,10 @@ SLF4J 在LoggerFactory 类中的 bind() 方法中调用 findPossibleStaticLogger
 
 jvm 加载包名和类名相同的类的规则是，先加载 classpath 中 jar 路径放在前面的，只有第一个 jar 包会被引入，
 第二个会在加载时判断已经被加载了而忽略。
+
+StaticLoggerBinder 类就是典型的适配器实现。如果是log4j的话，在 StaticLoggerBinder 直接返回 Log4jLoggerFactory()
+
+logback 则返回 LoggerContext, 后续返回的logger  都是实现了 log
+
+
 
