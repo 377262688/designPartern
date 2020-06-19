@@ -127,4 +127,12 @@
 
 ## 适配器模式
 
-SLF4J
+SLF4J 在LoggerFactory 类中的 bind() 方法中调用 findPossibleStaticLoggerBinderPathSet()中，会使用 ClassLoader
+去查找 org/slf4j/impl/StaticLoggerBinder.class 资源。 
+如果有多个 StaticLoggerBinder 存在，则会依次打印查找到的类。
+然后调用 StaticLoggerBinder.getSingleton()，如果类路径下不存在 StaticLoggerBinder的话，
+则会抛出 NoClassDefFoundError，进入异常处理流出
+
+jvm 加载包名和类名相同的类的规则是，先加载 classpath 中 jar 路径放在前面的，只有第一个 jar 包会被引入，
+第二个会在加载时判断已经被加载了而忽略。
+
