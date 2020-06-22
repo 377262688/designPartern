@@ -176,3 +176,29 @@ String 类的字符串常量池 也是享元模式的应用
 
 现实中称呼比较灵活。Subject-Observer，Publisher-Subscriber，Producer-Consumer，EventEmitter-EventListener，Dipatcher-Listener
 只要应用场景符合定义，都可以叫做观察者模式。
+
+## 模版方法模式
+
+模版方法模式在一个方法中定义一个骨架，并将某些步骤推迟到子类中的实现。模版方法模式可以让子类在不改变算法整体结构的情况下，重新定义算法中的某些步骤。
+
+主要用抽象类实现，把一个算法中不变的流出抽象到父类的模版方法中，将可变的部分 method1，method2 留给子类实现，所有的子类都可以复用父类模版流程中的代码
+
+### 复用
+- JDK 中InputStream 中的 read() 方法就是一个模版方法。具体的实现由子类实现。
+- java AbstractList中的 addAll(int index,Collection<? extends E> c) 就是一个模版方法，调用了add 方法，add由子类实现
+
+### 扩展
+
+- Java Servlet
+
+只需要定义一个继承 HttpServlet 的类，重写其中的 doGet(),doPost()方法。其中 HttpServlet中的 service() 方法就是模版方法。
+
+### 回调
+
+回调 分为同步回调 和异步回调，同步回调更像是模版模式，异步回调更像是 观察者模式。
+
+JdbcTemplate， RedisTemplate ,RestTemplate 都是基于回调来实现的。
+还有addShutdownHook 
+
+模版模式基于继承实现，回调基于组合实现
+
